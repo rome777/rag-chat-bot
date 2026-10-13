@@ -1,0 +1,14 @@
+{
+  "name": "warehouse-rag",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "물류창고 재고 조사 안내 챗봇 (로컬 RAG)",
+  "scripts": {
+    "build-index": "node src/build-index.mjs",
+    "search": "node src/search.mjs",
+    "ask": "node src/ask.mjs"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "^4.3.1"
+  }
+}
