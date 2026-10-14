@@ -38,7 +38,7 @@ flowchart TB
         L --> A["스트리밍 답변 + 출처 [WH-xxx]"]
     end
 
-    V --> S
+    준비 ==>|data/vectors.json 전달| 검색과생성
 
     %% 서브그래프 스타일
     style 준비 fill:#f0f9ff,stroke:#0284c7,stroke-width:2px,color:#0369a1
