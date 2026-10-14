@@ -21,20 +21,46 @@
 ## 2. 동작 원리
 
 ```mermaid
-flowchart LR
+flowchart TB
     subgraph 준비["1단계 사전 준비 (빌드)"]
+        direction LR
         D["위키백과 & 현장 SOP<br/>(docs/sop.md)"] --> C["청크 분할<br/>(data/chunks.json)"]
         C --> E1["임베딩 모델<br/>(embeddinggemma-300m)"]
         E1 --> V[("벡터 저장소<br/>data/vectors.json")]
     end
+
     subgraph 검색과생성["질문 질의 시 (2단계)"]
+        direction LR
         Q["사용자 질문"] --> E2["임베딩 모델"]
         E2 --> S["코사인 유사도(내적) 계산<br/>top-k 추출"]
-        V --> S
         S --> P["프롬프트 조립<br/>(시스템 규칙 + 자료 + 질문)"]
         P --> L["로컬 LLM<br/>(Ollama qwen3.5:2b)"]
         L --> A["스트리밍 답변 + 출처 [WH-xxx]"]
     end
+
+    V --> S
+
+    %% 서브그래프 스타일
+    style 준비 fill:#f0f9ff,stroke:#0284c7,stroke-width:2px,color:#0369a1
+    style 검색과생성 fill:#fdf4ff,stroke:#c026d3,stroke-width:2px,color:#86198f
+
+    %% 노드 스타일 (색상 적용)
+    style D fill:#e0f2fe,stroke:#0284c7,stroke-width:1.5px,color:#0f172a
+    style C fill:#e0f2fe,stroke:#0284c7,stroke-width:1.5px,color:#0f172a
+    style E1 fill:#bae6fd,stroke:#0284c7,stroke-width:2px,color:#0c4a6e
+    style V fill:#0284c7,stroke:#0369a1,stroke-width:2px,color:#ffffff
+
+    style Q fill:#fce7f3,stroke:#db2777,stroke-width:1.5px,color:#0f172a
+    style E2 fill:#bae6fd,stroke:#0284c7,stroke-width:2px,color:#0c4a6e
+    style S fill:#fef08a,stroke:#ca8a04,stroke-width:2px,color:#713f12
+    style P fill:#fed7aa,stroke:#ea580c,stroke-width:1.5px,color:#7c2d12
+    style L fill:#ddd6fe,stroke:#7c3aed,stroke-width:2px,color:#4c1d95
+    style A fill:#bbf7d0,stroke:#16a34a,stroke-width:2px,color:#14532d
+
+    %% 엣지(연결선) 스타일 (색상 적용)
+    linkStyle 0,1,2 stroke:#0284c7,stroke-width:2px;
+    linkStyle 3,4,5,6,7 stroke:#c026d3,stroke-width:2px;
+    linkStyle 8 stroke:#059669,stroke-width:2.5px;
 ```
 
 ### 5줄 요약
